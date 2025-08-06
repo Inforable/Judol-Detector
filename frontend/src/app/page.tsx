@@ -50,7 +50,7 @@ export default function Home() {
                         {result && !loading && (
                             <div>
                                 <ResultSummary result={result} />
-                                <DetectedComments comments={result.result?.detectedComments} />
+                                <DetectedComments comments={result.result?.detectedComments} patterns={result.pattern || []} />
                             </div>
                         )}
                         {!loading && !result && !error && <EmptyState />}
