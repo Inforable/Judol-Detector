@@ -43,10 +43,7 @@ export default function VideoInputForm({ onSubmit }: { onSubmit: (input: string,
     return (
         <form
             className="flex flex-col gap-4"
-            onSubmit={e => {
-                e.preventDefault();
-                onSubmit(input, algo);
-            }}
+            onSubmit={handleSubmit}
         >
             <input
                 type="text"

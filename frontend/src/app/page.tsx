@@ -7,7 +7,6 @@ import LoadingState from './component/LoadingState';
 import ErrorState from './component/ErrorState';
 import ResultSummary from './component/ResultSummary';
 import DetectedComments from './component/DetectedComments';
-import SampleComments from './component/SampleComments';
 import EmptyState from './component/EmptyState';
 import { detectComments } from './service/api';
 
@@ -52,7 +51,6 @@ export default function Home() {
                             <div>
                                 <ResultSummary result={result} />
                                 <DetectedComments comments={result.result?.detectedComments} />
-                                <SampleComments comments={result.result?.sampleComments} />
                             </div>
                         )}
                         {!loading && !result && !error && <EmptyState />}

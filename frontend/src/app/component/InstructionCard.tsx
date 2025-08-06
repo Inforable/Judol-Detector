@@ -2,7 +2,7 @@ export default function InstructionCard() {
     return (
         <div className="bg-blue-50 rounded-2xl border border-blue-200 p-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                <i className="fas fa-into-circle text-blue-600"></i>
+                <i className="fas fa-info-circle text-blue-600"></i>
                 Cara Penggunaan
             </h3>
             <ul className="space-y-2 text-sm text-gray-700">
