@@ -272,7 +272,7 @@ export default function DeleteMode() {
                             </li>
                             <li className="flex items-start gap-3">
                                 <i className="fas fa-exclamation-triangle text-yellow-500 mt-1 text-xs"></i>
-                                <span className="text-yellow-700 font-medium">Peringatan: Hanya bisa menghapus komentar di video milik sendiri</span>
+                                <span className="text-yellow-700 font-medium">Peringatan: Hanya bisa menghapus komentar di akun milik sendiri</span>
                             </li>
                         </ul>
                     </div>
