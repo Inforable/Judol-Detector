@@ -9,6 +9,5 @@ spin
 maxwin
 deposit
 wd
-wd cepat
-wd kilat
-wd anti rungkad
+zeus
+petir

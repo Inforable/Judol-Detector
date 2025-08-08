@@ -286,14 +286,14 @@ export default function DeleteMode() {
                                 Ditemukan {judolComments.length} komentar judol yang akan dihapus:
                             </p>
                             <div className="max-h-32 overflow-y-auto mb-4">
-                                {judolComments.slice(0, 5).map((comment, index) => (
+                                {judolComments.slice(0, 20).map((comment, index) => (
                                     <div key={index} className="text-xs bg-white p-2 rounded border mb-1">
                                         {comment.text}
                                     </div>
                                 ))}
-                                {judolComments.length > 5 && (
+                                {judolComments.length > 20 && (
                                     <p className="text-xs text-yellow-600">
-                                        ... dan {judolComments.length - 5} komentar lainnya
+                                        ... dan {judolComments.length - 20} komentar lainnya
                                     </p>
                                 )}
                             </div>
