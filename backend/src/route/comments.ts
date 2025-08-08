@@ -75,11 +75,26 @@ router.post("/insert", async (req: Request, res: Response) => {
 
 // Delete judol comments
 router.post("/delete", async (req: Request, res: Response) => {
-    const { videoId, accessToken } = req.body;
+    const { videoId, accessToken, algorithm, pattern } = req.body;
 
-    if (!videoId || !accessToken) {
+    if (!videoId || !accessToken || !algorithm) {
         return res.status(400).json({ 
-            error: "videoId and accessToken are required" 
+            error: "videoId, accessToken, and algorithm are required" 
+        });
+    }
+
+    // Validate algorithm
+    const validAlgorithms = ['regex', 'kmp', 'bm', 'rk'];
+    if (!validAlgorithms.includes(algorithm)) {
+        return res.status(400).json({
+            error: "Invalid algorithm. Must be one of: regex, kmp, bm, rk"
+        });
+    }
+
+    // Validate pattern for non-regex algorithms
+    if (algorithm !== 'regex' && (!pattern || !Array.isArray(pattern) || pattern.length === 0)) {
+        return res.status(400).json({
+            error: "Pattern array is required for non-regex algorithms"
         });
     }
 
@@ -91,7 +106,7 @@ router.post("/delete", async (req: Request, res: Response) => {
     }
 
     try {
-        const deletedComments = await deleteJudolComments(extractedVideoId, accessToken);
+        const deletedComments = await deleteJudolComments(extractedVideoId, accessToken, algorithm, pattern);
         const successCount = deletedComments.filter((c: { success: any; }) => c.success).length;
         const failCount = deletedComments.filter((c: { success: any; }) => !c.success).length;
 

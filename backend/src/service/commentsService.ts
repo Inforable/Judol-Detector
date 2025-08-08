@@ -40,7 +40,7 @@ async function insertComments(videoId: string, comments: string, accessToken: st
     return results;
 }
 
-async function deleteJudolComments(videoId: string, accessToken: string) {
+async function deleteJudolComments(videoId: string, accessToken: string, algorithm: string, pattern?: string[]) {
     oauth2Client.setCredentials({ access_token: accessToken });
     const youtube = google.youtube({ version: 'v3', auth: oauth2Client });
 
@@ -65,9 +65,10 @@ async function deleteJudolComments(videoId: string, accessToken: string) {
                 const commentText = comment.textDisplay;
 
                 // Check if comment contains judol using existing detection
-                const result = detectJudolComment([commentText], 'regex');
+                const result = detectJudolComment([commentText], algorithm, pattern);
 
                 if (result.detectedCount > 0) {
+                    console.log(`Deleting comment: ${commentText}`);
                     try {
                         await youtube.comments.delete({
                             id: item.snippet.topLevelComment.id,

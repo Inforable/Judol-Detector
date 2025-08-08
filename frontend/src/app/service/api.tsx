@@ -76,9 +76,13 @@ export class ApiService {
     static async deleteComments({
         videoId,
         accessToken,
+        algorithm,
+        pattern,
     }: {
         videoId: string;
         accessToken: string;
+        algorithm: string;
+        pattern?: string[];
     }): Promise<DeleteResult> {
         const response = await fetch(`${API_BASE_URL}/comments/delete`, {
             method: 'POST',
@@ -88,6 +92,8 @@ export class ApiService {
             body: JSON.stringify({
                 videoId,
                 accessToken,
+                algorithm,
+                pattern,
             }),
         });
 

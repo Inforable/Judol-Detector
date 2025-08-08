@@ -92,6 +92,11 @@ export default function DeleteMode() {
             return;
         }
 
+        if (algorithm !== 'regex' && (!pattern || pattern.length === 0)) {
+            setError('Pattern file required for selected algorithm');
+            return;
+        }
+
         setLoading(true);
         setError(null);
         setShowDeleteConfirm(false);
@@ -99,7 +104,9 @@ export default function DeleteMode() {
         try {
             const data = await ApiService.deleteComments({
                 videoId: videoInput.trim(),
-                accessToken: accessToken.trim()
+                accessToken: accessToken.trim(),
+                algorithm: algorithm,
+                pattern: pattern,
             });
             setResult(data);
             setJudolComments([]);
@@ -358,35 +365,6 @@ export default function DeleteMode() {
                                     </p>
                                 )}
                             </div>
-
-                            {/* Deleted Comments */}
-                            {result.deletedComments && result.deletedComments.length > 0 && (
-                                <details className="mt-3">
-                                    <summary className="cursor-pointer text-sm text-gray-600 hover:text-gray-800">
-                                        Lihat komentar yang dihapus ({result.deletedComments.length} item)
-                                    </summary>
-                                    <div className="mt-2 max-h-40 overflow-y-auto space-y-1">
-                                        {result.deletedComments.map((comment, index) => (
-                                            <div key={index} className={`text-xs p-2 rounded ${
-                                                comment.success 
-                                                    ? 'bg-red-50 border border-red-200' 
-                                                    : 'bg-orange-50 border border-orange-200'
-                                            }`}>
-                                                <span className={comment.success ? 'text-red-700' : 'text-orange-700'}>
-                                                    {comment.success 
-                                                        ? <i className="fas fa-check mr-1"></i> 
-                                                        : <i className="fas fa-times mr-1"></i>
-                                                    } 
-                                                    {comment.success ? 'Dihapus:' : 'Gagal:'} {comment.comment}
-                                                </span>
-                                                {comment.error && (
-                                                    <div className="text-red-600 text-xs mt-1">{comment.error}</div>
-                                                )}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </details>
-                            )}
                         </div>
                     )}
                 </div>
