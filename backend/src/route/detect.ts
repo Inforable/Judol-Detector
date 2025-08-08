@@ -37,7 +37,7 @@ router.post("/", async (req: Request, res: Response) => {
         algorithm,
         pattern,
         result,
-        sampleComments: normalizedComments.slice(0, 5),
+        sampleComments: normalizedComments.slice(0, 20),
     })
 });
 
