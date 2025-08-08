@@ -1,6 +1,6 @@
 # Judol Detector
 
-Aplikasi web untuk mendeteksi, mengelola, dan menganalisis komentar "judol" (judul clickbait) pada video YouTube menggunakan berbagai algoritma string matching dan regular expression.
+Aplikasi web untuk mendeteksi, mengelola, dan menganalisis komentar "judol" (Judi Online) pada video YouTube menggunakan berbagai algoritma string matching dan regular expression.
 
 ## **Deskripsi Aplikasi**
 
@@ -87,7 +87,7 @@ Aplikasi ini dibangun dengan **Next.js** (Frontend) dan **Express.js** (Backend)
 4. **Unicode Normalization**: Menggunakan NFD (Canonical Decomposition) untuk handle diacriticals
 5. **Case Normalization**: Konversi ke lowercase (biar konsisten ketika diproses oleh setiap algoritma)
 
-## ✨ **Fitur Aplikasi**
+## **Fitur Aplikasi**
 
 ### **Mode Deteksi**
 ### **Mode Insert Komentar**
@@ -144,11 +144,11 @@ Frontend akan berjalan di `http://localhost:3000`
 1. Buka [Google Cloud Console](https://console.cloud.google.com)
 2. Create project baru atau pilih existing project
 3. Enable YouTube Data API v3
-4. Create credentials → API Key
+4. Create credentials : API Key
 5. Copy API key ke file .env backend
 
 **OAuth 2.0 (untuk Insert/Delete):**
-1. Di Google Cloud Console → Credentials
+1. Di Google Cloud Console : Credentials
 2. Create OAuth 2.0 Client ID
 3. Application type: Web application
 4. Authorized redirect URIs: `https://developers.google.com/oauthplayground`
@@ -156,10 +156,10 @@ Frontend akan berjalan di `http://localhost:3000`
 
 ### **5. Mendapatkan Access Token**
 1. Buka [Google OAuth 2.0 Playground](https://developers.google.com/oauthplayground/)
-2. Settings → Use your own OAuth credentials
+2. Settings : Use your own OAuth credentials
 3. Input Client ID & Client Secret
 4. Scope: `https://www.googleapis.com/auth/youtube.force-ssl`
-5. Authorize APIs → Login dengan akun Google
+5. Authorize APIs : Login dengan akun Google
 6. Exchange authorization code for tokens
 7. Copy Access token untuk insert/delete komentar
 
