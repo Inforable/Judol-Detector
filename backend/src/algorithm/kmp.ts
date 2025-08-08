@@ -1,5 +1,5 @@
 function kmpSearch(text: string, pattern: string): boolean {
-    // Membuat array LPS (Longest Prefix Suffix)
+    // Membuat array LPS (Longest Prefix Suffix) atau Border Function
     const computeLPS = (pattern: string): number[] => {
         const lps = new Array(pattern.length).fill(0);
         let len = 0; // panjang dari prefix yang cocok
@@ -30,13 +30,15 @@ function kmpSearch(text: string, pattern: string): boolean {
 
     // proses KMP
     while (i < txt.length) {
+        // jika karakter cocok, lanjutkan
         if (pat[j] === txt[i]) {
             i++;
             j++;
         }
-        if (j === pat.length) {
+
+        if (j === pat.length) { // jika seluruh pattern ditemukan
             return true;
-        } else if (i < txt.length && pat[j] !== txt[i]) {
+        } else if (i < txt.length && pat[j] !== txt[i]) { // jika karakter tidak cocok
             if (j !== 0) {
                 j = lps[j - 1] ?? 0;
             } else {

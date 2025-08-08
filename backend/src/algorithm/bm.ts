@@ -15,13 +15,15 @@ function bmSearch(text: string, pattern: string): boolean {
     while (shift <= txt.length - pat.length) {
         let j = pat.length - 1;
 
+        // Bandingkan dari belakang
         while (j >= 0 && pat[j] === txt[shift + j]) {
             j--;
         }
-        if (j < 0) {
+        
+        if (j < 0) { // jika seluruh pattern cocok
             return true;
-        } else {
-            const badCharShift = badChar[txt.charCodeAt(shift + j)];
+        } else { // jika ada karakter yang tidak cocok
+            const badCharShift = badChar[txt.charCodeAt(shift + j)] ?? -1;
             shift += Math.max(1, j - badCharShift);
         }
     }

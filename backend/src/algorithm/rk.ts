@@ -4,7 +4,7 @@ function rkSearch(text: string, pattern: string): boolean {
     const pat = pattern.toLowerCase();
 
     const d = 256;
-    const q = 101;
+    const q = 10**9 + 7;
     const m = pat.length;
     const n = txt.length;
 
@@ -27,13 +27,13 @@ function rkSearch(text: string, pattern: string): boolean {
     for (let i = 0; i <= n - m; i++) {
         // Validasi apakah hash cocok
         if (p === t) {
-            let j;
-            for (j = 0; j < m; j++) {
+            let match = true;
+            for (let j = 0; j < m; j++) {
                 if (txt[i + j] !== pat[j]) {
                     break;
                 }
             }
-            if (j === m) {
+            if (match) {
                 return true;
             }
         }
@@ -41,8 +41,9 @@ function rkSearch(text: string, pattern: string): boolean {
         // Menghitung hash untuk teks berikutnya
         if (i < n - m) {
             t = (d * (t - txt.charCodeAt(i) * h) + txt.charCodeAt(i + m)) % q;
+
             if (t < 0) {
-                t += q;
+                t = (t + q) % q;
             }
         }
     }
