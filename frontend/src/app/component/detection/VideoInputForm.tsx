@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Algorithm } from '../../type';
 
 interface VideoInputFormProps {
@@ -19,6 +19,21 @@ export default function VideoInputForm({ onSubmit }: VideoInputFormProps) {
         { value: 'bm', label: 'BM' },
         { value: 'rk', label: 'Rabin-Karp' },
     ];
+
+    // Reset pattern ketika algoritma berubah ke regex
+    useEffect(() => {
+        if (algorithm === 'regex') {
+            setPattern(undefined);
+        }
+    }, [algorithm]);
+
+    // Handler untuk change algorithm
+    const handleAlgorithmChange = (algo: Algorithm) => {
+        setAlgorithm(algo);
+        if (algo === 'regex') {
+            setPattern(undefined);
+        }
+    };
 
     // Handler upload file pattern
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +66,8 @@ export default function VideoInputForm({ onSubmit }: VideoInputFormProps) {
         }
 
         setError(null);
-        onSubmit(input, algorithm, pattern);
+        // Untuk regex, kirim undefined sebagai pattern
+        onSubmit(input, algorithm, algorithm === 'regex' ? undefined : pattern);
     };
 
     return (

@@ -1,62 +1,50 @@
 "use client";
-import { useState } from 'react';
-import Header from './component/Header';
-import InputSection from './component/InputSection';
-import InstructionCard from './component/InstructionCard';
-import LoadingState from './component/LoadingState';
-import ErrorState from './component/ErrorState';
-import ResultSummary from './component/ResultSummary';
-import DetectedComments from './component/DetectedComments';
-import EmptyState from './component/EmptyState';
-import { detectComments } from './service/api';
+import { useState } from "react";
+import Header from "./component/shared/Header";
+import ModeSelector from "./component/layout/ModeSelector";
+import DetectionMode from "./component/detection/DetectionMode";
+import InsertMode from './component/management/InsertMode';
+import DeleteMode from './component/management/DeleteMode';
+import { AppMode } from "./type";
 
 export default function Home() {
-    const [result, setResult] = useState<any>(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const [currentMode, setCurrentMode] = useState<AppMode>('detect');
 
-    const handleSubmit = async (input: string, algo:string, pattern?: string[]) => {
-        setLoading(true);
-        setError(null);
-        setResult(null);
-        try {
-            const data = await detectComments({
-                videoUrl: input,
-                algorithm: algo,
-                pattern: pattern,
-            });
-            setResult(data);
-        } catch (error) {
-            setError("Failed to detect comments");
-        } finally {
-            setLoading(false);
+    const handleModeChange = (mode: AppMode) => {
+        setCurrentMode(mode);
+    };
+
+    const renderModeComponent = () => {
+        switch (currentMode) {
+            case 'detect':
+                return <DetectionMode />;
+            case 'insert':
+                return <InsertMode />;
+            case 'delete':
+                return <DeleteMode />;
+            default:
+                return <DetectionMode />;
         }
     };
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-gray-50">
             <Header />
-            <main className="max-w-7xl mx-auto px-6 py-12">
-                <div className="grid lg:grid-cols-2 gap-8">
-                    {/* Left Section */}
-                    <div className="space-y-6">
-                        <InputSection onSubmit={handleSubmit} />
-                        <InstructionCard />
-                    </div>
-                    {/* Right Section */}
-                    <div className="space-y-6">
-                        {loading && <LoadingState />}
-                        {error && <ErrorState error={error} />}
-                        {result && !loading && (
-                            <div>
-                                <ResultSummary result={result} />
-                                <DetectedComments comments={result.result?.detectedComments} patterns={result.pattern || []} />
-                            </div>
-                        )}
-                        {!loading && !result && !error && <EmptyState />}
-                    </div>
+
+            {/* Mode Selector */}
+            <section className="max-w-7xl mx-auto px-6 py-8">
+                <ModeSelector
+                    currentMode={currentMode}
+                    onModeChange={handleModeChange}
+                />
+            </section>
+
+            {/* Mode Content */}
+            <section className="max-w-7xl mx-auto px-6 pb-12">
+                <div className="bg-white rounded-3xl shadow-lg border border-gray-200 p-8">
+                    {renderModeComponent()}
                 </div>
-            </main>
+            </section>
         </div>
     );
 }

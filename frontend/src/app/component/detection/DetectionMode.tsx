@@ -62,6 +62,7 @@ export default function DetectionMode() {
                             <DetectedComments 
                                 comments={result.result?.detectedComments || []} 
                                 patterns={result.pattern || []}
+                                algorithm={result.algorithm}
                             />
                         </div>
                     )}
